@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" ng-app="MyApp">
+<head>
+  <meta charset="utf-8">
+  <title>HHS - Problems</title>
+  <link rel="stylesheet" href="../Shared/content/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="../Shared/content/css/bootstrap-vmctheme.css"/>
+  <script src="../common/angularjs/1.7.5/angular.min.js"></script>
+  <script src="../common/angularjs/1.7.5/angular-route.min.js"></script>
+  <script src="js/main.js"></script>
+</head>
+
+<body ng-controller="MyCtrl">
+  <!-- Logo Banner -->
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <img class="navbar-logo" src="../Shared/content/img/CMG_logo_white.png" alt="logo" width="50"/>
+        <a class="navbar-brand" href="#">Valley Medical Center, A Division of Catalyst Medical Group</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Search Bar-->
+    <label for="searchText">Weighted Problem Search</label>
+    <div class="container well has-feedback search">
+      <input placeholder="Weighted Problem Search" type="text" ng-change="displayTable()" ng-model="userStr" ng-model-options="{debounce : 1}" class="form-control" id="searchText" autocomplete="off"/>
+      <span class="glyphicon glyphicon-search form-control-feedback"></span>
+    </div>
+
+    <!-- Current Patient Problems Table-->
+    <div class="container well" id="problemsTable" style="display:none;">
+      <div class="row scrollingProblemsTable expand">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ICD10</th>
+              <th>Current Patient Problems</th>
+              <th>Weight</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tblRow" ng-mouseover="open=true;" ng-mouseleave="open=false;" ng-repeat="problem in currentProblems | orderBy:'-Description' track by $index" ng-class="{'color-red': 1 == 1}">
+              <td>{{problem.ICD10}}</td>
+              <td>{{problem.Description}}</td>
+              <td>{{problem.Weight}}</td>
+              <td class="rowbtn">
+                <button class="btn btn-danger" ng-show="open" ng-click="removeButton(problem)">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Error Messages for User-->
+    <div class="container">
+      <div id="error"></div>
+    </div>
+
+    <!-- Search Results Table-->
+    <div class="container well" id="searchTable" style="display:none;">
+      <div class="row scrollingSearchTable expand">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>ICD10</th>
+              <th>Description</th>
+              <th>Weight</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tblRow" ng-mouseover="open=true; checkList(problem);" ng-mouseleave="open=false;" ng-repeat="problem in problems | orderBy:'-Weight' track by $index" ng-class="{'color-red': onList == true && open == true, 'color-grey': problem.Weight === 0, 'color-blue': problem.Weight <= 1 && problem.Weight > 0, 'color-green': problem.Weight >= 1}">
+              <td>{{problem.ICD10}}</td>
+              <td>{{problem.Description}}</td>
+              <td>{{problem.Weight}}</td>
+              <td class="rowbtn">
+                <button class="btn btn-success" ng-show="open && offList" ng-click="addButton(problem)">Add</button>
+                <button class="btn btn-danger" ng-show="open && onList" ng-click="removeButton(problem)">Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Testing Purposes Only -->
+    <a href="#" onclick='var w=window.open(window.location,"_blank",["menubar=yes","resizable=yes","scrollbars=yes","status=yes","titlebar=yes","toolbar=yes"].join(","));'>Open to IE (for testing only)</a>
+  </div>
+
+</body>
+</html>

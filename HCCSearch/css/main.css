@@ -1,0 +1,123 @@
+body{
+  margin-top: 45px;
+  margin-bottom: 20px;
+}
+h2{
+  text-align: center;
+}
+label{
+  margin-top: 1em;
+}
+#error{
+  font-size: 1.5em;
+  font-weight: bold;
+  color: red;
+  margin-left: -15px !important;
+}
+.search{
+  background-color: #00426c;
+  margin-bottom: 0px;
+  box-shadow: 0px 0px 50px #dadada;
+}
+.well{
+  box-shadow: 0px 0px 50px #dadada;
+  padding: 5px;
+}
+.row {
+  margin: 0;
+}
+.rowbtn{
+  padding: 0 !important;
+  width: 52px;
+}
+.btn{
+  height: 3em;
+  margin: 0 auto;
+  display: block;
+}
+.form-control-feedback{
+  top: 5px !important;
+  right: 5px !important;
+}
+.glyphicon-search{
+  color: #003152;
+}
+.color-red{
+  color: #a94442 !important;
+  background-color: #f2dede !important;
+  border-color: #ebccd1 !important;
+}
+.color-blue{
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+.color-green{
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+.color-grey{
+  color: #989898;
+  background-color: #f1f1f1;
+  border-color: #eaeaea;
+}
+.color-yellow{
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}
+::-ms-clear {
+    display: none;
+}
+::-webkit-scrollbar-track{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #595a5a3b;
+}
+@media only screen and (min-width: 500px) and (max-width: 1366px) {
+  .scrollingSearchTable{
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .scrollingProblemsTable{
+    max-height: 112px;
+    overflow-y: auto;
+  }
+  .expand:hover{
+    max-height: 300px !important;
+  }
+}
+@media only screen and (min-width: 1367px) and (max-width: 1600px) {
+  .scrollingSearchTable{
+    max-height: 500px;
+    overflow-y: auto;
+  }
+  .scrollingProblemsTable{
+    max-height: 112px;
+    overflow-y: auto;
+  }
+  .expand:hover{
+    max-height: 500px !important;
+  }
+}
+@media only screen and (min-width: 1601px) and (max-width: 2500px) {
+  .scrollingSearchTable{
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  .scrollingProblemsTable{
+    max-height: 112px;
+    overflow-y: auto;
+  }
+  .expand:hover{
+    max-height: 600px !important;
+  }
+}
