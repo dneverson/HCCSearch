@@ -78,13 +78,31 @@ app.controller("MyCtrl", function($scope, $http){
   // Searches JSON string with searchString by description or ICD10 code
   $scope.searchJSON = function(searchStr){
     $scope.problems = [];
-    searchStr = $scope.addSlashes(searchStr).replace(' ', '[^"]+');
-    var jsonStr = JSON.stringify($scope.jsonFile, null, ' ');
+    searchStr = $scope.addSlashes(searchStr).replace(' ','[^"]+');
+    var jsonStr = JSON.stringify($scope.jsonFile, null,' ');
+    // Matches and adds weight to current patient problems table
+    //var totalWeight = 0; //NOTE remove if not needed anymore
+    for(i=0;i<$scope.currentProblems.length;i++){
+      var icdcode = $scope.currentProblems[i].ICD10;
+      var found0 = jsonStr.match(
+        new RegExp(
+        '{\\s+"icd10":\\s".*'+ icdcode +'.*",'+
+        '\\s+"description":\\s".*",'+
+        '\\s+"weight":\\s[\\d\\.]+\\s+}'
+        ,'gi')
+      );
+      if(found0){
+        var normalized = (JSON.parse(JSON.stringify(found0).replace(/"{/g,"{").replace(/\\n/g,"").replace(/\\/g,"").replace(/}"/g,"}")));
+        $scope.currentProblems[i].Weight = normalized[0].Weight;
+        //totalWeight += normalized[0].Weight; //NOTE remove if not needed anymore
+      };
+    };
+    //$scope.currentProblems.unshift({"ICD10": "", "Description": "TOTAL WEIGHT:", "Weight": totalWeight}); //NOTE remove if not needed anymore
     // Search by Description
     var found1 = jsonStr.match(
       new RegExp(
         '{\\s+"icd10":\\s"\\w+",'+
-        '\\s+"description":\\s.*'+ searchStr + '.*",'+
+        '\\s+"description":\\s.*'+ searchStr +'.*",'+
         '\\s+"weight":\\s[\\d\\.]+\\s+}'
         ,'gi')
     );
@@ -106,17 +124,12 @@ app.controller("MyCtrl", function($scope, $http){
   // gets and updates currentproblems for table
   $scope.updateCurrentProblemsTable = function(){
     $scope.currentProblems = [];
-    var tmp1 = $scope.getCurrentProblems();
-    for(i=0;i<tmp1.length;i++){
-      if($scope.icd10Compare(tmp1[i])){
-        var tmp2 = tmp1[i];
-        var tmp3 = 0;
-        for(j=0;j<6;j++){
-          tmp3 += 1;
-        }
+    var currentProblemList = $scope.getCurrentProblems();
+    for(i=0;i<currentProblemList.length;i++){
+      if($scope.icd10Compare(currentProblemList[i])){
         $scope.currentProblems.push({
-          ICD10: tmp1[i].ICD10.replace(".",""),
-          Description: tmp1[i].Description,
+          ICD10: currentProblemList[i].ICD10.replace(".",""),
+          Description: currentProblemList[i].Description,
           Weight: "TBD"
         });
       };
@@ -271,6 +284,14 @@ app.controller("MyCtrl", function($scope, $http){
       $scope.hideElement("searchTable");
       $scope.addToElement("error", "Type in the search bar for results.");
     };
+  };
+  //For Testing Only Hover Mode on off button
+  $scope.toggleExpand = function(element, cssClass){
+    if (document.getElementById(element).children[0].classList.contains(cssClass)){
+      document.getElementById(element).children[0].classList.remove(cssClass);
+    }else{
+      document.getElementById(element).children[0].classList.add(cssClass);
+    }
   };
 
   // ################## CALL FUNCTIONS ################
