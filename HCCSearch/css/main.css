@@ -67,6 +67,9 @@ label{
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
+.btn-xs{
+  height: 50%;
+}
 ::-ms-clear {
     display: none;
 }
