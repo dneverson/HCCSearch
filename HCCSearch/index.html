@@ -32,29 +32,29 @@
       <input placeholder="Weighted Problem Search" type="text" ng-change="displayTable()" ng-model="userStr" ng-model-options="{debounce : 1}" class="form-control" id="searchText" autocomplete="off"/>
       <span class="glyphicon glyphicon-search form-control-feedback"></span>
       </div>
-      <button id="hoverBtn" style="float: left;"type="button" class="btn btn-primary btn-xs" ng-click="toggleExpand('problemsTable', 'expand')">Hover On/Off</button>
+      <button id="hoverBtn" style="float: left;" type="button" class="btn btn-primary btn-xs" ng-click="toggleExpand('currprobs', 'expand')">Hover On/Off</button>
       &nbsp;&nbsp;
-      <button id="updateCurrentProblemsBtn"style="float: left;"type="button" class="btn btn-primary btn-xs" ng-click="toggleProblemsTable('problemsTable', 'hide')">Current Patient Problems</button>
+      <button id="updateCurrentProblemsBtn" style="float: left;" type="button" class="btn btn-primary btn-xs" ng-click="toggleProblemsTable('problemsTable', 'hide')">Current Patient Problems</button>
 
 
     <!-- Current Patient Problems Table-->
     <div class="container well hide" id="problemsTable">
-      <div class="row scrollingProblemsTable expand">
+      <div class="row">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>ICD10</th>
-              <th>Current Patient Problems</th>
-              <th>Weight</th>
-              <th></th>
+              <th class="A">ICD10</th>
+              <th class="B">Current Patient Problems</th>
+              <th class="C">Weight</th>
+              <th class="D"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="currprobs" class="fixedHeadersA expand">
             <tr class="tblRow" ng-mouseover="open=true;" ng-mouseleave="open=false;" ng-repeat="currentproblem in currentProblems | orderBy:'-Weight' track by $index" ng-class="{'color-red': open == true, 'color-grey': currentproblem.Weight === 0 || currentproblem.Weight == '--', 'color-blue': currentproblem.Weight <= 1 && currentproblem.Weight > 0, 'color-green': currentproblem.Weight >= 1}">
-              <td>{{currentproblem.ICD10}}</td>
-              <td>{{currentproblem.Description}}</td>
-              <td>{{currentproblem.Weight}}</td>
-              <td class="rowbtn">
+              <td class="A">{{currentproblem.ICD10}}</td>
+              <td class="B">{{currentproblem.Description}}</td>
+              <td class="C">{{currentproblem.Weight}}</td>
+              <td class="rowbtn D">
                 <button class="btn btn-danger" ng-show="open" ng-click="removeButton(currentproblem)">Remove</button>
               </td>
             </tr>
@@ -65,27 +65,27 @@
 
     <!-- Error Messages for User-->
     <div class="container">
-      <div id="error"></div>
+      <br><div id="error"></div>
     </div>
 
     <!-- Search Results Table-->
     <div class="container well" id="searchTable" style="display:none;">
-      <div class="row scrollingSearchTable expand">
+      <div class="row">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>ICD10</th>
-              <th>Description</th>
-              <th>Weight</th>
-              <th></th>
+              <th class="A">ICD10</th>
+              <th class="B">Description</th>
+              <th class="C">Weight</th>
+              <th class="D"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="fixedHeadersB expand">
             <tr class="tblRow" ng-mouseover="open=true; checkList(problem);" ng-mouseleave="open=false;" ng-repeat="problem in problems | orderBy:'-Weight' track by $index" ng-class="{'color-red': onList == true && open == true, 'color-grey': problem.Weight === 0, 'color-blue': problem.Weight <= 1 && problem.Weight > 0, 'color-green': problem.Weight >= 1}">
-              <td>{{problem.ICD10}}</td>
-              <td>{{problem.Description}}</td>
-              <td>{{problem.Weight}}</td>
-              <td class="rowbtn">
+              <td class="A">{{problem.ICD10}}</td>
+              <td class="B">{{problem.Description}}</td>
+              <td class="C">{{problem.Weight}}</td>
+              <td class="rowbtn D">
                 <button class="btn btn-success" ng-show="open && offList" ng-click="addButton(problem)">Add</button>
                 <button class="btn btn-danger" ng-show="open && onList" ng-click="removeButton(problem)">Remove</button>
               </td>
