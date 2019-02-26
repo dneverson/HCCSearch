@@ -261,10 +261,11 @@ app.controller("MyCtrl", function($scope, $http){
   };
   //For Testing Only Hover Mode on off button
   $scope.toggleExpand = function(element, cssClass){
-    if (document.getElementById(element).children[0].classList.contains(cssClass)){
-      document.getElementById(element).children[0].classList.remove(cssClass);
+
+    if (document.getElementById(element).classList.contains(cssClass)){
+      document.getElementById(element).classList.remove(cssClass);
     }else{
-      document.getElementById(element).children[0].classList.add(cssClass);
+      document.getElementById(element).classList.add(cssClass);
     }
   };
   $scope.toggleProblemsTable = function(element, cssClass){
