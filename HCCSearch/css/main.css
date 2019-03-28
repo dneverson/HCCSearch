@@ -1,3 +1,21 @@
+.alert{
+  position: fixed;
+  top: 50%;
+  width: 50%;
+  z-index: 1030;
+  right: 25%;
+  box-shadow: 0px 0px 50px #0000;
+}
+.overlay{
+    background: #252525;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.8;
+    z-index: 1029;
+}
 body{
   margin-top: 45px;
   margin-bottom: 20px;
@@ -15,11 +33,15 @@ table{
   clear: both;
 }
 thead {
+    /* display: table; // Remove this and fixes spacing issue
+                       // But does not show scroll*/
     display: table;
     table-layout:fixed;
     width: 100% ;
 }
 tbody {
+    /* display:block; // Remove this and fixes spacing issue
+    width: 100% ;     // But does not show scroll */
     display:block;
     width: 100% ;
     overflow-y: scroll;
