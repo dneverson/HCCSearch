@@ -21,8 +21,6 @@ function toggleElement(elementID){
   if(elmnt == "block") document.getElementById(elementID).style.display = "none";
 };
 
-
-
 /*=======================================================================*
 * Clears an element by ID
 *========================================================================*/

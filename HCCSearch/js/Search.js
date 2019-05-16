@@ -42,46 +42,50 @@ function addSlashes(str){
 * Search by ICD10 Code
 *========================================================================*/
 function searchICD10(str, jsonFile){
-  var result;
-  str = addSlashes(str).replace(' ','[^"]+');
-  var jsonStr = JSON.stringify(jsonFile, null,' ');
-  var found = jsonStr.match(
-    new RegExp(
-      '{\\s+"icd10":\\s".*'+ str +'.*",'+
-      '\\s+"description":\\s".*",'+
-      '\\s+"weight":\\s[\\d\\.]+\\s+}'
-      ,'gi')
-    );
-    if(found){
-      return (JSON.parse(JSON.stringify(found)
-      .replace(/"{/g,"{")
-      .replace(/\\n/g,"")
-      .replace(/\\/g,"")
-      .replace(/}"/g,"}")));
-    }
+  try{
+    var result;
+    str = addSlashes(str).replace(' ','[^"]+');
+    var jsonStr = JSON.stringify(jsonFile, null,' ');
+    var found = jsonStr.match(
+      new RegExp(
+        '{\\s+"icd10":\\s".*'+ str +'.*",'+
+        '\\s+"description":\\s".*",'+
+        '\\s+"weight":\\s[\\d\\.]+\\s+}'
+        ,'gi')
+      );
+      if(found){
+        return (JSON.parse(JSON.stringify(found)
+        .replace(/"{/g,"{")
+        .replace(/\\n/g,"")
+        .replace(/\\/g,"")
+        .replace(/}"/g,"}")));
+      }
+  }catch(e){ console.log(e); }
 };
 
 /*=======================================================================*
 * Search by Description
 *========================================================================*/
 function searchDesc(str, jsonFile){
-  var result;
-  str = addSlashes(str).replace(' ','[^"]+');
-  var jsonStr = JSON.stringify(jsonFile, null,' ');
-  var found = jsonStr.match(
-    new RegExp(
-      '{\\s+"icd10":\\s"\\w+",'+
-      '\\s+"description":\\s.*'+ str +'.*",'+
-      '\\s+"weight":\\s[\\d\\.]+\\s+}'
-      ,'gi')
-    );
-    if(found){
-      return (JSON.parse(JSON.stringify(found)
-      .replace(/"{/g,"{")
-      .replace(/\\n/g,"")
-      .replace(/\\/g,"")
-      .replace(/}"/g,"}")));
-    }
+  try{
+    var result;
+    str = addSlashes(str).replace(' ','[^"]+');
+    var jsonStr = JSON.stringify(jsonFile, null,' ');
+    var found = jsonStr.match(
+      new RegExp(
+        '{\\s+"icd10":\\s"\\w+",'+
+        '\\s+"description":\\s.*'+ str +'.*",'+
+        '\\s+"weight":\\s[\\d\\.]+\\s+}'
+        ,'gi')
+      );
+      if(found){
+        return (JSON.parse(JSON.stringify(found)
+        .replace(/"{/g,"{")
+        .replace(/\\n/g,"")
+        .replace(/\\/g,"")
+        .replace(/}"/g,"}")));
+      }
+  }catch(e){ console.log(e); }
 };
 
 /*=======================================================================*

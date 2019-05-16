@@ -14,6 +14,7 @@ function getCurrentProblems(jsonFile){
         Description: (isICD10Valid)?prob[i].icd10CodeDetail.longDescription:"NA",
         stopdate: prob[i].stopdate,
         stopreason: prob[i].stopreason,
+        Recommendations: [],
         Weight: 0
       });
     }

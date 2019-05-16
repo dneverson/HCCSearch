@@ -1,3 +1,12 @@
+hr{
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+.blank{
+  padding-right: 3em !important; /*padding-right: 5em !important; for letter button type, 3em for symbol*/
+}
 .alert{
   position: fixed;
   top: 50%;
@@ -7,21 +16,18 @@
   box-shadow: 0px 0px 50px #0000;
 }
 .overlay{
-    background: #252525;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 0.8;
-    z-index: 1029;
+  background: #252525;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.8;
+  z-index: 1029;
 }
 body{
   margin-top: 45px;
   margin-bottom: 20px;
-}
-thead{
-  display: table-header-group;
 }
 h2{
   text-align: center;
@@ -33,28 +39,23 @@ table{
   clear: both;
 }
 thead {
-    /* display: table; // Remove this and fixes spacing issue
-                       // But does not show scroll*/
-    display: table;
-    table-layout:fixed;
-    width: 100% ;
+  display: table;
+  width: 100% ;
 }
 tbody {
-    /* display:block; // Remove this and fixes spacing issue
-    width: 100% ;     // But does not show scroll */
-    display:block;
-    width: 100% ;
-    overflow-y: scroll;
+  display:block;
+  width: 100% ;
+  overflow-y: scroll;
 }
 tbody tr {
-    table-layout:inherit;
-    width: 100% ;
+  table-layout:inherit;
+  width: 100% ;
 }
 th, td {
-    width: auto ;
+  width: auto ;
 }
-#error{
-  font-size: 1.5em;
+.error{
+  font-size: 1.4em;
   font-weight: bold;
   color: red;
   margin-left: -15px ;
@@ -67,17 +68,19 @@ th, td {
 .well{
   box-shadow: 0px 0px 50px #dadada;
   padding: 5px;
+  width: 100%;
 }
 .row {
   margin: 0;
 }
 .rowbtn{
-  padding: 0 ;
-  width: 52px;
+  padding: 0px !important;
+  width: 52px !important;
+  vertical-align: middle !important;
 }
 .btn{
+  float: right;
   height: 3em;
-  margin: 0 auto;
   display: block;
 }
 .form-control-feedback{
@@ -112,14 +115,15 @@ th, td {
   background-color: #fcf8e3;
   border-color: #faebcc;
 }
+.selected{
+  font-weight: 900;
+  box-shadow: inset 0px 0px 100px 0px rgba(0,0,0,0.1);
+}
 .btn-xs{
   height: 50%;
 }
-.hide{
-  display: none;
-}
 ::-ms-clear {
-    display: none;
+  display: none;
 }
 ::-webkit-scrollbar-track{
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -134,53 +138,56 @@ th, td {
   background-color: #595a5a3b;
 }
 .A{
-  width: 10% ;
+  width: 6em !important;
 }
 .B{
-  width: 85% ;
+  width: 64em !important;
 }
 .C{
-  width: 10% ;
+  width: 5em !important;
 }
 .D{
-  width: 10% ;
+  width: 5em !important;
 }
 @media only screen and (min-width: 500px) and (max-width: 1366px) {
-  .fixedHeadersB{
-    max-height: 300px ;
-    overflow-y: scroll;
-  }
   .fixedHeadersA{
-    max-height: 112px ;
+    max-height: 300px !important;
     overflow-y: scroll;
   }
-  .expand:hover{
-    max-height: 300px ;
+  .fixedHeadersB{
+    max-height: 160px !important;  /* A/1.875 */
+    overflow-y: scroll;
+  }
+  .fixedHeadersC{
+    max-height: 115px !important; /* A/2.6 */
+    overflow-y: scroll;
   }
 }
 @media only screen and (min-width: 1367px) and (max-width: 1600px) {
-  .fixedHeadersB{
-    max-height: 500px ;
-    overflow-y: scroll;
-  }
   .fixedHeadersA{
-    max-height: 112px ;
+    max-height: 500px !important;
     overflow-y: scroll;
   }
-  .expand:hover{
-    max-height: 500px ;
+  .fixedHeadersB{
+    max-height: 266px !important;  /* A/1.875 */
+    overflow-y: scroll;
+  }
+  .fixedHeadersC{
+    max-height: 192px !important; /* A/2.6 */
+    overflow-y: scroll;
   }
 }
 @media only screen and (min-width: 1601px) and (max-width: 2500px) {
-  .fixedHeadersB{
-    max-height: 600px ;
-    overflow-y: scroll;
-  }
   .fixedHeadersA{
-    max-height: 112px ;
+    max-height: 600px !important;
     overflow-y: scroll;
   }
-  .expand:hover{
-    max-height: 600px ;
+  .fixedHeadersB{
+    max-height: 320px !important; /* A/1.875 */
+    overflow-y: scroll;
+  }
+  .fixedHeadersC{
+    max-height: 230px !important; /* A/2.6 */
+    overflow-y: scroll;
   }
 }
