@@ -1,6 +1,12 @@
 # HCCSearch
 
-Searches a weighted problems list and is capable of adding, removing, and recommending problems for a patient when loaded into Centricity CPS 12.3 or higher. 
+Searches a weighted problems list and is capable of adding, removing, and recommending problems for a patient when loaded into Centricity CPS 12.3 or higher. This will help providers determine higher weighted problems for patients.
+
+  Search List contains the following information:
+  - ICD10 Code
+  - Description of Problem
+  - Weight of Problem
+  
 
 ## Getting Started
 
@@ -22,8 +28,8 @@ Searches a weighted problems list and is capable of adding, removing, and recomm
 
 ## Authors
 
-* **Derry Everson** - [Arachnid Server](https://www.arachnidserver.com)
+* **Derry Everson** - [Catalyst Medical Group](https://www.catalystmedicalgroup.com)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+TBD
