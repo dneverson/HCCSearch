@@ -1,6 +1,6 @@
 # HCCSearch
 
-Search weighted problems list that is capable in adding and removing current patient problems, when loaded in Centricity CPS 12.3 or higher. 
+Searches a weighted problems list and is capable of adding, removing, and recommending problems for a patient when loaded into Centricity CPS 12.3 or higher. 
 
 ## Getting Started
 
