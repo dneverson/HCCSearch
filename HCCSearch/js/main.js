@@ -20,6 +20,11 @@
   diffrent descriptions. This can cause issues with this form.
 *============================================================================*/
 
+/*=========================================================================
+* OBS TERMS USED
+* 0
+*========================================================================*/
+
 var app = angular.module("MyApp", []);
 
 app.controller("MyCtrl", function($scope, $http){
@@ -33,9 +38,18 @@ app.controller("MyCtrl", function($scope, $http){
   /*=======================================================================*
   * Gets json file from external local file
   *========================================================================*/
-  $http.get('./data/Problems.json').then(function(response) {
-    jsonFile = response.data;
+  document.getElementById("loader").style.display = "block";
+  $scope.$watch('$viewContentLoaded', function(event){
+    $http.get('./data/Problems_All.min.json').then(function(response) {
+      jsonFile = response.data;
+      console.log(jsonFile.length)
+    }).then(function(result){
+      document.getElementById("loader").style.display = "none";
+    });
+
   });
+
+
 
   /*=======================================================================*
   * Initiates search function from user string and modifies dom objects
@@ -71,7 +85,7 @@ app.controller("MyCtrl", function($scope, $http){
   * refreshes current problem table and weights for that table
   *========================================================================*/
   function updateCurrentProblemsTable(){
-    $scope.currentProblems = getCurrentProblems(jsonFile);
+    $scope.currentProblems = getCurrentProblems();
     setTimeout(function(){checkCurrentProblemWeights();},500);
     setTimeout(function(){getRecommendations();},500);
   };
@@ -190,6 +204,24 @@ app.controller("MyCtrl", function($scope, $http){
   $scope.isSelected = function(section) {
     return $scope.selected === section;
   };
+
+
+
+  function amountscrolled(){
+    var table = document.getElementById("PTable")
+    var scrollheight = table.scrollHeight;
+    var scrollTop = table.scrollTop;
+    var pctScrolled = Math.floor(scrollTop/scrollheight * 100) // gets percentage scrolled (ie: 80 NaN if tracklength == 0)
+    console.log(pctScrolled + '% scrolled')
+  }
+
+  $(document.getElementById("PTable")).on("scroll", function(){
+      amountscrolled()
+  })
+
+
+
+
 
   /*=======================================================================*
   * INIT

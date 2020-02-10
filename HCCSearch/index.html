@@ -1,42 +1,50 @@
+<!--
+/*=========================================================================
+* @author Derry Everson
+*
+* Work:
+** https://www.catalystmedicalgroup.com
+** deverson@valleymedicalcenter.com
+*
+* Date: 06/13/2019
+*========================================================================*/
+-->
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr" ng-app="MyApp">
 <head>
-  <meta charset="utf-8">
   <title>HHS - Problems</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="PRAGMA" content="NO-CACHE" />
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
+  <meta http-equiv="X-UA-Compatible" content="IE=8,IE=9" />
   <!-- CSS COMMON FILES-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="../common/bootstrap/3.4.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../Shared/content/css/bootstrap-vmctheme.css"/>
-    <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="../../HtmlLibraries/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/main.css">
   <!-- JS COMMON FILES-->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.5/angular-route.min.js"></script>-->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
-    <script src="../common/angularjs/1.7.8/angular.min.js"></script>
-    <script src="../common/angularjs/1.7.8/angular-route.min.js"></script>
-    <script src="../common/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../common/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="../../HtmlLibraries/angularjs/1.7.8/angular.min.js"></script>
+  <script src="../../HtmlLibraries/angularjs/1.7.8/angular-route.min.js"></script>
+  <script src="../../HtmlLibraries/jquery/js/3.3.1/jquery.min.js"></script>
+  <script src="../../HtmlLibraries/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <!-- JS Search Files-->
-    <script src="js/main.js"></script>
-    <script src="js/MEL_API.js"></script>
-    <script src="js/DOM_Functions.js"></script>
-    <script src="js/Search.js"></script>
+  <script src="js/main.js"></script>
+  <script src="../../HtmlLibraries/centricity/MEL_API.js"></script>
+  <script src="../../HtmlLibraries/centricity/DOM_Functions.js"></script>
+  <script src="../../HtmlLibraries/centricity/Search.js"></script>
 </head>
 
 <body ng-controller="MyCtrl">
-  <!-- Logo Banner -->
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <img class="navbar-logo" src="../Shared/content/img/CMG_logo_white.png" alt="logo" width="50"/>
-        <a class="navbar-brand" href="#">Valley Medical Center, A Division of Catalyst Medical Group</a>
+
+  <div id="loader"></div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>HCC Search</h1>
       </div>
     </div>
-  </div>
-
-  <br>
-  <div class="container">
 
     <!-- Tab Navigation-->
     <ul class="nav nav-tabs">
@@ -48,125 +56,141 @@
       <!-- Search Results Table-->
       <div class="container well tab-pane in active" id="searchTable">
         <!-- Search Bar-->
-        <label for="searchText">Weighted Problem Search</label>
-        <div class="container well has-feedback search">
+        <label for="searchText"> Weighted Problem Search</label>
+        <div class="well has-feedback search">
           <input placeholder="Weighted Problem Search" type="text" ng-change="initSearch(usrstr)" ng-model="usrstr" ng-model-options="{debounce : 1}" class="form-control" id="searchText" autocomplete="off"/>
           <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
 
         <div class="row" ng-show="problems.length">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th class="A">ICD10</th>
-                <th class="B">Description</th>
-                <th class="C">Weight</th>
-                <th class="D"></th>
-              </tr>
-            </thead>
-            <tbody class="fixedHeadersA">
-              <tr class="tblRow" ng-mouseover="open=true;" ng-mouseleave="open=false;" ng-repeat="problem in problems | orderBy:'-Weight' track by $index" ng-class="{'color-grey': problem.Weight == 0  && !checkList(problem,currentProblems), 'color-blue': problem.Weight <= 1 && problem.Weight > 0 && !checkList(problem,currentProblems), 'color-green': problem.Weight >= 1 && !checkList(problem,currentProblems), 'color-red': checkList(problem,currentProblems)}">
-                <td class="A">{{problem.ICD10}}</td>
-                <td class="B">{{problem.Description}}</td>
-                <td class="C">{{problem.Weight}}</td>
-                <td class="rowbtn D">
-                  <div class="blank" ng-show="!open"></div>
-                  <button class="btn btn-success btn-sm" ng-show="open && !checkList(problem,currentProblems) && isMEL" ng-click="addButton(problem)"><span class="glyphicon glyphicon-plus"></span></button>
-                  <button class="btn btn-danger btn-sm" ng-show="open && checkList(problem,currentProblems) && isMEL" ng-click="removeButton(problem, currentProblems)"><span class="glyphicon glyphicon-minus"></span></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p><strong>Results:</strong> {{problems.length}}</p>
+          <div class="col-sm-12">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="A">ICD10</th>
+                  <th class="B">Description</th>
+                  <th class="C">Weight</th>
+                  <th class="D"></th>
+                </tr>
+              </thead>
+              <tbody class="fixedHeadersA" id="PTable">
+                <tr class="tblRow" ng-mouseover="open=true;" ng-mouseleave="open=false;" ng-repeat="problem in problems | orderBy:'-Weight' track by $index" ng-class="{'color-grey': problem.Weight == 0  && !checkList(problem,currentProblems), 'color-blue': problem.Weight <= 1 && problem.Weight > 0 && !checkList(problem,currentProblems), 'color-green': problem.Weight >= 1 && !checkList(problem,currentProblems), 'color-red': checkList(problem,currentProblems)}">
+                  <td class="A">{{problem.ICD10}}</td>
+                  <td class="B">{{problem.Description}}</td>
+                  <td class="C">{{problem.Weight}}</td>
+                  <td class="rowbtn D">
+                    <div class="blank" ng-show="!open"></div>
+                    <button class="btn btn-success btn-sm" ng-show="open && !checkList(problem,currentProblems) && isMEL" ng-click="addButton(problem)" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                    <button class="btn btn-danger btn-sm" ng-show="open && checkList(problem,currentProblems) && isMEL" ng-click="removeButton(problem, currentProblems)" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Results:</strong> {{problems.length}}</p>
+          </div>
         </div>
-        
+
       </div><!-- End of Search Results Table Tab-->
 
       <!-- Current Patient Problems Table Tab-->
       <div class="container well tab-pane" id="problemsTable" ng-show="isMEL"> <!-- container well hide-->
         <div class="row">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th class="A">ICD10</th>
-                <th class="B">Current Patient Problems</th>
-                <th class="C">Weight</th>
-                <th class="D"></th>
-                <th class="E"></th>
-              </tr>
-            </thead>
-            <tbody id="currprobs" class="fixedHeadersB">
-              <tr class="tblRow" ng-mouseover="open=true;" ng-mouseleave="open=false;" ng-repeat="currentproblem in currentProblems | orderBy:'-Weight' track by $index" ng-class="{'selected' : isSelected(currentproblem), 'color-grey': currentproblem.Weight == 0, 'color-blue': currentproblem.Weight <= 1 && currentproblem.Weight > 0, 'color-green': currentproblem.Weight >= 1}">
-                <td class="A">{{currentproblem.ICD10}}</td>
-                <td class="B">{{currentproblem.Description}}</td>
-                <td class="C">{{currentproblem.Weight}}</td>
-                <td class="rowbtn D">
-                  <div class="blank" ng-show="!open"></div>
-                  <button class="btn btn-primary btn-sm" ng-show="currentproblem.Recommendations[0]" ng-click="recommendButton(currentproblem); setMaster(currentproblem); "><span class="glyphicon glyphicon-info-sign"></span></button>
-                </td>
-                <td class="rowbtn E">
-                  <div class="blank" ng-show="!open"></div>
-                  <button class="btn btn-danger btn-sm" ng-show="open" ng-click="removeButton(currentproblem, currentProblems)"><span class="glyphicon glyphicon-minus"></span></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p><strong>Total Weight:</strong> {{totalWeight}} | <strong>Results:</strong> {{currentProblems.length}}</p>
+          <div class="col-sm-12">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="A">ICD10</th>
+                  <th class="B">Current Patient Problems</th>
+                  <th class="C">Weight</th>
+                  <th class="D"></th>
+                  <th class="E"></th>
+                </tr>
+              </thead>
+              <tbody id="currprobs" class="fixedHeadersB">
+                <tr class="tblRow" ng-mouseover="open=true;" ng-mouseleave="open=false;" ng-repeat="currentproblem in currentProblems | orderBy:'-Weight' track by $index" ng-class="{'selected' : isSelected(currentproblem), 'color-grey': currentproblem.Weight == 0, 'color-blue': currentproblem.Weight <= 1 && currentproblem.Weight > 0, 'color-green': currentproblem.Weight >= 1}">
+                  <td class="A">{{currentproblem.ICD10}}</td>
+                  <td class="B">{{currentproblem.Description}}</td>
+                  <td class="C">{{currentproblem.Weight}}</td>
+                  <td class="rowbtn D">
+                    <div class="blank" ng-show="!open"></div>
+                    <button class="btn btn-primary btn-sm" ng-show="currentproblem.Recommendations[0]" ng-click="recommendButton(currentproblem); setMaster(currentproblem);" type="button"><span class="glyphicon glyphicon-info-sign"></span></button>
+                  </td>
+                  <td class="rowbtn E">
+                    <div class="blank" ng-show="!open"></div>
+                    <button class="btn btn-danger btn-sm" ng-show="open" ng-click="removeButton(currentproblem, currentProblems)" type="button"><span class="glyphicon glyphicon-minus"></span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Total Weight:</strong> {{totalWeight}} | <strong>Results:</strong> {{currentProblems.length}}</p>
+          </div>
         </div>
 
         <div class="row" ng-show="Rcmds">
-          <hr>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th class="A">ICD10</th>
-                <th class="B">Recommended Problems for: [{{Rcmds.ICD10}}]</th>
-                <th class="C">Weight</th>
-                <th class="D"></th>
-                <th class="E"></th>
-              </tr>
-            </thead>
-            <tbody id="currprobs" class="fixedHeadersC">
-              <tr class="tblRow" ng-mouseover="open=true;" ng-mouseleave="open=false;" ng-repeat="problem in Rcmds.Recommendations | orderBy:'-Weight' track by $index" ng-class="{'color-grey': problem.Weight == 0, 'color-blue': problem.Weight <= 1 && problem.Weight > 0, 'color-green': problem.Weight >= 1}">
-                <td class="A">{{problem.ICD10}}</td>
-                <td class="B">{{problem.Description}}</td>
-                <td class="C">{{problem.Weight}}</td>
-                <td class="rowbtn D">
-                  <div class="blank" ng-show="!open"></div>
-                  <button class="btn btn-success btn-sm" ng-show="open" ng-click="replaceButton(problem, Rcmds, currentProblems)"><span class="glyphicon glyphicon-retweet"></span></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p><strong>Results:</strong> {{Rcmds.Recommendations.length}}</p>
+          <div class="col-sm-12">
+            <hr>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th class="A">ICD10</th>
+                  <th class="B">Problems to consider for: [{{Rcmds.ICD10}}]</th>
+                  <th class="C">Weight</th>
+                  <th class="D"></th>
+                  <th class="E"></th>
+                </tr>
+              </thead>
+              <tbody id="currprobs" class="fixedHeadersC">
+                <tr class="tblRow" ng-mouseover="open=true;" ng-mouseleave="open=false;" ng-repeat="problem in Rcmds.Recommendations | orderBy:'-Weight' track by $index" ng-class="{'color-grey': problem.Weight == 0, 'color-blue': problem.Weight <= 1 && problem.Weight > 0, 'color-green': problem.Weight >= 1}">
+                  <td class="A">{{problem.ICD10}}</td>
+                  <td class="B">{{problem.Description}}</td>
+                  <td class="C">{{problem.Weight}}</td>
+                  <td class="rowbtn D">
+                    <div class="blank" ng-show="!open"></div>
+                    <button class="btn btn-success btn-sm" ng-show="open" ng-click="replaceButton(problem, Rcmds, currentProblems)" type="button"><span class="glyphicon glyphicon-retweet"></span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p><strong>Results:</strong> {{Rcmds.Recommendations.length}}</p>
+          </div>
         </div>
-
       </div><!-- End of Current Patient Problems Table Tab-->
 
     </div><!-- End of Tabbed Container -->
 
     <!-- Error Messages for User-->
-    <div class="container" ng-show="!problems.length && error.vis">
-      <div class="error">{{error.msg}}</div>
-    </div>
 
-    <!-- Alert Window -->
-    <div class="overlay" ng-if="alert.vis"></div>
-    <div ng-class="alert.cl" ng-if="alert.vis" ng-click="alert.vis = false;" class="alert alert-dismissible fade in">
-      <strong>{{alert.ttl}}</strong> {{alert.msg}}
+    <div>
+      <div class="container" ng-show="!problems.length && error.vis">
+        <div class="error">{{error.msg}}</div>
+      </div>
+
+
+      <!-- Alert Window -->
+
+      <div class="overlay" ng-if="alert.vis"></div>
+      <div ng-class="alert.cl" ng-if="alert.vis" ng-click="alert.vis = false;" class="alert alert-dismissible fade in">
+        <strong>{{alert.ttl}}</strong> {{alert.msg}}
+      </div>
     </div>
 
     <div ng-show="isMEL">
-      <button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-retweet"></span> = Replace Problem</button>
-      <button class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-info-sign"></span> = Recommended Problems</button>
-      <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-minus"></span> = Remove Problem</button>
-      <button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span> = Add Problem</button>
+      <div class="btnRefGroup">
+        <fieldset>
+          <legend>Button Legend</legend>
+          <button class="btn btn-success btn-xs no-click" type="button"><span class="glyphicon glyphicon-retweet"></span> = Replace Problem</button>
+          <button class="btn btn-primary btn-xs no-click" type="button"><span class="glyphicon glyphicon-info-sign"></span> = Problems to Consider</button>
+          <button class="btn btn-danger  btn-xs no-click" type="button"><span class="glyphicon glyphicon-minus"></span> = Remove Problem</button>
+          <button class="btn btn-success btn-xs no-click" type="button"><span class="glyphicon glyphicon-plus"></span> = Add Problem</button>
+        </fieldset>
+      </div>
     </div>
+
 
     <!-- Testing Purposes Only
     <a href="#" onclick='var w=window.open(window.location,"_blank",["menubar=yes","resizable=yes","scrollbars=yes","status=yes","titlebar=yes","toolbar=yes"].join(","));'>Open to IE (for testing only)</a>
-     -->
-  </div>
+  -->
+</div>
 
 </body>
 </html>
