@@ -28,7 +28,7 @@ Searches a weighted problems list and is capable of adding, removing, and recomm
 
 ## Authors
 
-* **Derry Everson** - [Catalyst Medical Group](https://www.catalystmedicalgroup.com)
+* **Derry Everson**
 
 ## License
 
